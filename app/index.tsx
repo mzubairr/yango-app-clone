@@ -46,12 +46,10 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* search input */}
         <Pressable
           onPress={() => setModalVisible(true)}
           className="mt-7 flex-row items-center bg-[#e0e0e0] rounded-full h-[60px] relative overflow-hidden"
         >
-          {/* Left image with perfect crop */}
           <View className="py-1 absolute left-0 h-full w-[130px] overflow-hidden z-10">
             <Image
               className="w-[250px] h-full -translate-x-[45%]"
@@ -59,13 +57,9 @@ export default function HomeScreen() {
               resizeMode="contain"
             />
           </View>
-
-          {/* Perfectly centered text */}
           <View className="absolute inset-0 flex items-center justify-center">
             <Text className="text-xl font-semibold">Where to?</Text>
           </View>
-
-          {/* Right icon */}
           <View className="absolute right-4 z-10">
             <MaterialCommunityIcons name="arrow-right-drop-circle" size={25} color="black" />
           </View>
