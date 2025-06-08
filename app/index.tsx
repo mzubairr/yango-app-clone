@@ -3,7 +3,7 @@ import ridercar from '@/assets/images/ride-car.png';
 import CustomModal from '@/components/modal';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useState } from 'react';
-import { Image, Pressable, Text, TextInput, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
@@ -49,22 +49,26 @@ export default function HomeScreen() {
         {/* search input */}
         <Pressable
           onPress={() => setModalVisible(true)}
-          className="mt-7 flex-row items-center overflow-hidden bg-[#e0e0e0] rounded-full justify-between px-4 "
+          className="mt-7 flex-row items-center bg-[#e0e0e0] rounded-full h-[60px] relative overflow-hidden"
         >
-          <View className="w-[130px] h-[60px]">
+          {/* Left image with perfect crop */}
+          <View className="py-1 absolute left-0 h-full w-[130px] overflow-hidden z-10">
             <Image
-              className="w-[250px] h-[100%] -translate-x-2/4"
+              className="w-[250px] h-full -translate-x-[45%]"
               source={{ uri: "https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" }}
               resizeMode="contain"
             />
           </View>
-          <TextInput
-            className="placeholder:text-black text-2xl font-semibold flex-1"
-            placeholder="Where to?"
-            placeholderTextColor="#000"
-            editable={false}
-          />
-          <MaterialCommunityIcons name="arrow-right-drop-circle" size={30} color="black" />
+
+          {/* Perfectly centered text */}
+          <View className="absolute inset-0 flex items-center justify-center">
+            <Text className="text-xl font-semibold">Where to?</Text>
+          </View>
+
+          {/* Right icon */}
+          <View className="absolute right-4 z-10">
+            <MaterialCommunityIcons name="arrow-right-drop-circle" size={25} color="black" />
+          </View>
         </Pressable>
 
         <CustomModal
