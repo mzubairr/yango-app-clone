@@ -35,7 +35,7 @@ const RequestModal = () => {
     ];
 
     return (
-        <ScrollView style={{ boxShadow: '0 0 10px rgba(154, 154, 154, 0.59)' }}  className="w-full h-1/2 rounded-t-[30px] bottom-0 absolute" contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView style={{ boxShadow: '0 0 10px rgba(154, 154, 154, 0.59)' }} className="w-full h-1/2 rounded-t-[30px] bottom-0 absolute" contentContainerStyle={{ flexGrow: 1 }}>
             <View className="px-4">
                 <Text className="uppercase font-extrabold text-3xl py-4">your trip</Text>
                 <View className="flex-row mb-2 items-center">
