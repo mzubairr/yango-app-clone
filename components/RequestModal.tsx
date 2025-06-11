@@ -13,22 +13,22 @@ const RequestModal = () => {
 
     const transport = [
         {
-            image: require('@/assets/icons/economycar.png'),
+            image: require('@/assets/images/economycar.png'),
             title: 'Economy',
             price: 650,
         },
         {
-            image: require('@/assets/icons/comfortcar.png'),
+            image: require('@/assets/images/comfortcar.png'),
             title: 'Comfort',
             price: 1200,
         },
         {
-            image: require('@/assets/icons/motorbike.png'),
+            image: require('@/assets/images/motorbike.png'),
             title: 'Bike',
             price: 2500,
         },
         {
-            image: require('@/assets/icons/rickshaw.png'),
+            image: require('@/assets/images/rickshaw.png'),
             title: 'Rickshaw',
             price: 300,
         },
@@ -67,8 +67,8 @@ const RequestModal = () => {
                 </View>
                 {/* export section */}
                 <View style={{ height: 140 }} className="w-full flex-row justify-between px-2 py-2">
-                    {transport.length > 0 && transport.map((item) => (
-                        <TouchableOpacity className="bg-[#EEEEEE] h-full w-[23%] items-center p-2 rounded-lg">
+                    {transport.length > 0 && transport.map((item, idx) => (
+                        <TouchableOpacity key={idx} className="bg-[#EEEEEE] h-full w-[23%] items-center p-2 rounded-lg">
                             <View className="h-1/2 w-full">
                                 <Image
                                     source={item.image}

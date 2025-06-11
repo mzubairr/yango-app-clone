@@ -6,9 +6,6 @@
       "@/*": [
         "./*"
       ],
-      // "@firebase/auth": [
-      //   "./node_modules/@firebase/auth/dist/index.rn.d.ts"
-      // ]
     }
   },
   "include": [
@@ -21,5 +18,5 @@
     "lib/constants.js",
     "Redux/reducers/locationSlice.js",
     "components/modal.jsx"
-, "lib/firebase.js"  ]
+, "lib/firebase.ts", "app/login.jsx"  ]
 }

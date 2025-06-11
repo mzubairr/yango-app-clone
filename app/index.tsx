@@ -1,5 +1,4 @@
 // @ts-ignore
-import ridercar from '@/assets/images/ride-car.png';
 import CustomModal from '@/components/modal';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useState } from 'react';
@@ -11,41 +10,39 @@ export default function HomeScreen() {
 
   return (
     <>
-      <SafeAreaView className='flex-1 p-5 bg-white overflow-x-hidden'>
+      {modalVisible && <View className='flex-1 absolute inset-0 bg-[rgba(154,154,154,0.3)] z-10' />}
+      <SafeAreaView className='flex-1 px-5 py-2 bg-white overflow-x-hidden'>
         {/* header */}
-        <Image
-          height={50}
-          width={150}
-          source={{
-            uri: ('https://brandlogos.net/wp-content/uploads/2023/09/yango-logo_brandlogos.net_tymas.png')
-          }}
-        />
-        <Text className='text-3xl py-3 font-[500]'>
-          Your Location<MaterialCommunityIcons name="arrow-right-drop-circle" size={26} color="black" />
-        </Text>
-
+        <View className='h-[50px] w-[150px]'>
+          <Image
+            className='h-full w-full'
+            resizeMode='contain'
+            source={require("@/assets/images/yango-logo.png")}
+          />
+        </View>
+        <View className='flex-row items-center gap-1'>
+          <Text className='text-2xl py-3 font-bold'>Your Location</Text>
+          <MaterialCommunityIcons name="arrow-right-drop-circle" size={26} color="black" />
+        </View>
         {/* yango images */}
-        <View className='flex-row items-center w-[100%] h-[180px] gap-0 px-5'>
-          <View className='h-[100%] w-[50%]'>
+        <View className='flex-row items-center w-[100%] h-[180px]'>
+          <View className='h-[100%] w-[50%] p-1'>
             <Image
               className='h-[100%] w-[100%]'
-              // source={deliveryman}
-              source={{
-                uri: ('https://avatars.mds.yandex.net/get-lpc/12602567/6913a587-752e-4f38-8314-8299ea676375/orig')
-              }}
+              source={require("@/assets/images/motorbike.png")}
               resizeMode='cover'
             />
           </View>
           <View
-            className='h-[100%] w-[50%]'>
+            className='h-[100%] w-[50%] p-1'>
             <Image
               className='h-[100%] w-[100%]'
-              source={ridercar}
+              source={require("@/assets/images/economycar.png")}
               resizeMode='cover'
             />
           </View>
         </View>
-
+        {/* search query */}
         <Pressable
           onPress={() => setModalVisible(true)}
           className="mt-7 flex-row items-center bg-[#e0e0e0] rounded-full h-[60px] relative overflow-hidden"

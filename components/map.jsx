@@ -2,7 +2,7 @@ import { API_KEY } from '@/lib/constants';
 import { decodePolyline } from '@/lib/decodePolyline';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,10 @@ export default function Map() {
             console.error("Failed to fetch directions", error);
         }
     };
-    getRoute()
+
+    useEffect(() => {
+        getRoute();
+    }, [fromLocation, toLocation]);
 
     return (
         <View className='h-1/2 w-full'>
@@ -50,38 +53,41 @@ export default function Map() {
                 </Text>
             )}
             <View className='flex-1'>
-                <MapView
-                    style={{ flex: 1 }}
-                    initialRegion={{
-                        latitude: fromLocation?.lat,
-                        longitude: fromLocation?.lng,
-                        latitudeDelta: 0.05,
-                        longitudeDelta: 0.05,
-                    }}
-                    zoomControlEnabled={true}
-                >
-                    {fromLocation && (
-                        <Marker
-                            coordinate={{ latitude: fromLocation.lat, longitude: fromLocation.lng }}
-                            title={pickupLocation}
-                        />
-                    )}
+                {fromLocation && (
+                    <MapView
+                        style={{ flex: 1 }}
+                        initialRegion={{
+                            latitude: fromLocation?.lat,
+                            longitude: fromLocation?.lng,
+                            latitudeDelta: 0.05,
+                            longitudeDelta: 0.05,
+                        }}
+                        zoomControlEnabled={true}
+                    >
+                        {fromLocation && (
+                            <Marker
+                                coordinate={{ latitude: fromLocation.lat, longitude: fromLocation.lng }}
+                                title={pickupLocation}
+                            />
+                        )}
 
-                    {toLocation && (
-                        <Marker
-                            coordinate={{ latitude: toLocation.lat, longitude: toLocation.lng }}
-                            title={destinationLocation}
-                        />
-                    )}
+                        {toLocation && (
+                            <Marker
+                                coordinate={{ latitude: toLocation.lat, longitude: toLocation.lng }}
+                                title={destinationLocation}
+                            />
+                        )}
 
-                    {polylinePoints && (
-                        <Polyline
-                            coordinates={polylinePoints}
-                            strokeColor="#007AFF"
-                            strokeWidth={5}
-                        />
-                    )}
-                </MapView>
+                        {polylinePoints && (
+                            <Polyline
+                                coordinates={polylinePoints}
+                                strokeColor="#007AFF"
+                                strokeWidth={5}
+                            />
+                        )}
+                    </MapView>
+                )}
+
                 <TouchableOpacity className='bg-white absolute bottom-9 left-2 rounded-full p-3'>
                     <AntDesign name="arrowleft" size={24} color="black" onPress={() => router.back()} />
                 </TouchableOpacity>

@@ -1,87 +1,73 @@
-import { auth } from "@/lib/firebase";
-import { router } from "expo-router";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
+import { auth } from '@/lib/firebase';
+import { Link, router } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
 import {
-    Button,
+    ActivityIndicator,
+    Alert,
+    Image,
+    Keyboard,
     KeyboardAvoidingView,
-    StyleSheet,
+    Platform,
     Text,
-    TextInput
+    TextInput,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = () => {
-        console.log("Login Email:", email);
-        console.log("Login Password:", password);
-
+        setLoading(true)
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                router.push("/");
+            .then(() => {
+                router.replace("/");
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(errorMessage);
-            });
+            .catch(() => {
+                Alert.alert("Login Failed");
+                setLoading(false)
+            })
     };
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
-            <Text style={styles.title}>Login</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Button title="Login" onPress={handleLogin} />
-            <Text style={styles.toggleText} onPress={() => router.push("/signup")}>
-                Don't have an account? Register
-            </Text>
-        </KeyboardAvoidingView>
+        <SafeAreaView className="bg-white flex-1">
+            {loading ?
+                <ActivityIndicator className='flex-1' size={70} color="red" />
+                : <>
+                    <Image
+                        className='h-1/5 w-1/5 self-center'
+                        resizeMode='contain'
+                        source={require("@/assets/images/yango-logo.png")}
+                    />
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                            <View className='p-4 justify-around'>
+                                <Text className='text-4xl capitalize font-bold mb-5'>Login</Text>
+                                <TextInput value={email} placeholder="Email" className='h-16 p-4 rounded-full focus:border-black border border-gray-400 mb-3'
+                                    onChangeText={setEmail}
+                                />
+                                <TextInput value={password} placeholder="Password" className='h-16 p-4 rounded-full focus:border-black border border-gray-400 mb-3'
+                                    onChangeText={(setPassword)}
+                                />
+                                <TouchableOpacity className='bg-red-500 p-3 rounded-full mt-10' onPress={handleLogin} >
+                                    <Text className='text-white self-center text-xl'>Login</Text>
+                                </TouchableOpacity>
+                                <Link href={"/signup"} className='self-end mt-5 underline'> Don't have an account?</Link>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
+                </>
+            }
+        </SafeAreaView>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
-        padding: 20,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-    },
-    input: {
-        width: "100%",
-        height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 10,
-        paddingLeft: 10,
-    },
-    toggleText: {
-        marginTop: 20,
-        color: "#007BFF",
-        textAlign: "center",
-    },
-});
+
 
 export default Login;
