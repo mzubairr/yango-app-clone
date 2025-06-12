@@ -2,7 +2,7 @@
 import CustomModal from '@/components/modal';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useState } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
@@ -10,6 +10,7 @@ export default function HomeScreen() {
 
   return (
     <>
+      <StatusBar barStyle={'dark-content'} />
       {modalVisible && <View className='flex-1 absolute inset-0 bg-[rgba(154,154,154,0.3)] z-10' />}
       <SafeAreaView className='flex-1 px-5 py-2 bg-white overflow-x-hidden'>
         {/* header */}

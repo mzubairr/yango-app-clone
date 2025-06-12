@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import React from "react";
 import {
     Image,
@@ -39,7 +40,7 @@ const RequestModal = () => {
             <View className="px-4">
                 <Text className="uppercase font-extrabold text-3xl py-4">your trip</Text>
                 <View className="flex-row mb-2 items-center">
-                    <View className="h-16 w-16 mr-4 overflow-hidden">
+                    <View className="h-16 w-16 overflow-hidden p-2">
                         <Image
                             source={require('@/assets/images/direction-man.png')}
                             className="h-full w-full -scale-x-[1]"
@@ -50,15 +51,9 @@ const RequestModal = () => {
                 </View>
                 <View className="mb-2">
                     <View className="flex-row items-center border-b border-gray-400">
-                        <View className="h-16 w-16 mr-4 overflow-hidden">
-                            <Image
-                                source={{
-                                    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVqA_64gwHREW_7znS3pYq_wuj7hHFa5kqA&s'
-                                }}
-                                className="h-full w-full -scale-x-[1]"
-                                resizeMode="contain"
-                            />
-                        </View>
+                        <View className='p-4'>
+                            <Ionicons className='relative -scale-x-[1]' name="flag-sharp" size={30} color="black" />
+                        </View> 
                         <Text className="text-2xl font-medium flex-1">{destinationLocation}</Text>
                         <TouchableOpacity className="bg-[#EEEEEE] py-1 px-5 rounded-full">
                             <Text className="text-xl">Stops</Text>
@@ -85,17 +80,17 @@ const RequestModal = () => {
                 </View>
             </View>
             <View className="bg-white flex-1 w-full px-4 flex-row justify-between items-center">
-                <View className="h-16 w-16">
+                <View className="h-16 w-16 p-2">
                     <Image
                         source={require('@/assets/images/cash-img.png')}
                         className="h-full w-full"
                         resizeMode="contain"
                     />
                 </View>
-                <TouchableOpacity className="bg-red-500 py-4 px-20 rounded-2xl">
-                    <Text className="text-white text-2xl">Reqeuest</Text>
+                <TouchableOpacity className="bg-[#FF4931] py-4 px-20 rounded-2xl">
+                    <Text className="text-white text-xl">Reqeuest</Text>
                 </TouchableOpacity>
-                <View className="h-16 w-16">
+                <View className="h-16 w-16 p-2">
                     <Image
                         source={{
                             uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSjNQ-FtlX38G-4EdmvuhC6JdJmfgSoRjBl6EL3_TWjFdV9NqNa",

@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "yango-app",
+    "name": "YANGO",
     "slug": "yango-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/yango-icon.webp",
     "scheme": "yangoapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

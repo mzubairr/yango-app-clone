@@ -1,10 +1,11 @@
 import { useLocationAutocomplete } from "@/hooks/useAutocomplete";
 import { setDestinationLocation, setFromLocation, setPickupLocation, setToLocation } from "@/Redux/reducers/locationSlice";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
     Alert,
-    Image,
     Keyboard,
     Modal,
     ScrollView,
@@ -85,12 +86,9 @@ const CustomModal = ({ visible, onClose }) => {
                         <View className="p-7 rounded-3xl bg-white shadow-md">
                             {/* Pickup Input */}
                             <View className="flex-row mb-2 items-center">
-                                <View className="h-16 w-16 mr-4 overflow-hidden p-3 flex-row items-center">
-                                    <Image
-                                        source={require("@/assets/images/direction-man.png")}
-                                        className="h-full w-full -scale-x-[1]"
-                                        resizeMode="contain"
-                                    />
+                                <View className="w-2/12">
+                                    <MaterialCommunityIcons className="self-center" name="human-female-dance" size={40}
+                                        color={(activeInput === "pickup") ? "red" : "black"} />
                                 </View>
                                 <View className="flex-1 border-b border-gray-300 relative">
                                     <Text className="text-gray-500 text-xl">Pickup</Text>
@@ -125,13 +123,9 @@ const CustomModal = ({ visible, onClose }) => {
 
                             {/* Destination Input */}
                             <View className="flex-row items-center">
-                                <View className="h-16 w-16 mr-4">
-                                    <Image
-                                        source={{
-                                            uri: "https://thumbs.dreamstime.com/b/crossed-flags-icon-digital-red-any-design-isolated-white-vector-illustration-98827982.jpg",
-                                        }}
-                                        className="h-full w-full"
-                                    />
+                                <View className="w-2/12">
+                                    <Ionicons className='-scale-x-[1] self-center' name="flag-sharp" size={30}
+                                        color={(activeInput === "destination") ? "red" : "black"} />
                                 </View>
                                 <View className="flex-1 relative">
                                     <Text className="text-gray-500 text-xl">Destination</Text>
@@ -140,7 +134,7 @@ const CustomModal = ({ visible, onClose }) => {
                                         placeholderTextColor="#000"
                                         className="text-xl font-semibold p-0"
                                         value={destinationQuery}
-                                        onFocus={() => setActiveInput("desstination")}
+                                        onFocus={() => setActiveInput("destination")}
                                         onChangeText={onDestinationChange}
                                         onSubmitEditing={navigateToMap}
                                     />
