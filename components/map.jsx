@@ -15,12 +15,13 @@ export default function Map() {
     const [polylinePoints, setPolylinePoints] = useState(null);
     const [distanceInfo, setDistanceInfo] = useState(null);
 
-
     const getRoute = async () => {
+
         if (!fromLocation || !toLocation) {
-            console.warn("From or To location missing");
+            console.warn("Origin or destination missing");
             return;
         }
+
         const origin = `${fromLocation.lat},${fromLocation.lng}`;
         const destination = `${toLocation.lat},${toLocation.lng}`;
 
@@ -42,7 +43,9 @@ export default function Map() {
     };
 
     useEffect(() => {
-        getRoute();
+        if ((fromLocation) && toLocation) {
+            getRoute();
+        }
     }, [fromLocation, toLocation]);
 
     return (
@@ -53,43 +56,42 @@ export default function Map() {
                 </Text>
             )}
             <View className='flex-1'>
-                {fromLocation && (
-                    <MapView
-                        style={{ flex: 1 }}
-                        initialRegion={{
-                            latitude: fromLocation?.lat,
-                            longitude: fromLocation?.lng,
-                            latitudeDelta: 0.05,
-                            longitudeDelta: 0.05,
-                        }}
-                        zoomControlEnabled={true}
-                    >
-                        {fromLocation && (
-                            <Marker
-                                coordinate={{ latitude: fromLocation.lat, longitude: fromLocation.lng }}
-                                title={pickupLocation}
-                            />
-                        )}
+                <MapView
+                    style={{ flex: 1 }}
+                    initialRegion={{
+                        latitude: fromLocation?.lat ?? 24.8607,
+                        longitude: fromLocation?.lng ?? 67.0011,
+                        latitudeDelta: 0.01,
+                        longitudeDelta: 0.01,
+                    }}
+                    zoomControlEnabled={true}
+                    showsUserLocation={true}
 
-                        {toLocation && (
-                            <Marker
-                                coordinate={{ latitude: toLocation.lat, longitude: toLocation.lng }}
-                                title={destinationLocation}
-                            />
-                        )}
+                >
+                    {fromLocation && (
+                        <Marker
+                            coordinate={{ latitude: fromLocation.lat, longitude: fromLocation.lng }}
+                            title={pickupLocation}
+                        />
+                    )}
 
-                        {polylinePoints && (
-                            <Polyline
-                                coordinates={polylinePoints}
-                                strokeColor="#007AFF"
-                                strokeWidth={5}
-                            />
-                        )}
-                    </MapView>
-                )}
+                    {toLocation && (
+                        <Marker
+                            coordinate={{ latitude: toLocation.lat, longitude: toLocation.lng }}
+                            title={destinationLocation}
+                        />
+                    )}
 
-                <TouchableOpacity className='bg-white absolute bottom-9 left-2 rounded-full p-3'>
-                    <AntDesign name="arrowleft" size={24} color="black" onPress={() => router.back()} />
+                    {polylinePoints && (
+                        <Polyline
+                            coordinates={polylinePoints}
+                            strokeColor="#007AFF"
+                            strokeWidth={5}
+                        />
+                    )}
+                </MapView>
+                <TouchableOpacity onPress={() => router.back()} className='bg-white absolute bottom-9 left-4 rounded-full p-3'>
+                    <AntDesign name="arrowleft" size={24} color="black" />
                 </TouchableOpacity>
             </View>
         </View>

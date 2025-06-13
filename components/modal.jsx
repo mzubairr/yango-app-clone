@@ -1,9 +1,11 @@
 import { useLocationAutocomplete } from "@/hooks/useAutocomplete";
+import { useLocation } from "@/hooks/useLocation";
 import { setDestinationLocation, setFromLocation, setPickupLocation, setToLocation } from "@/Redux/reducers/locationSlice";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import * as Location from "expo-location";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Alert,
     Keyboard,
@@ -20,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const CustomModal = ({ visible, onClose }) => {
     const dispatch = useDispatch();
+    const { location: currentLocation } = useLocation();
 
     const {
         query: pickupQuery,
@@ -39,9 +42,31 @@ const CustomModal = ({ visible, onClose }) => {
 
     const [activeInput, setActiveInput] = useState(null);
 
+    const fromLocation = useSelector((state) => state.location.fromLocation);
+    const toLocation = useSelector((state) => state.location.toLocation);
+
+    useEffect(() => {
+        const fetchCurrentLocationName = async () => {
+            if (!fromLocation && currentLocation) {
+                const { latitude, longitude } = currentLocation.coords;
+                try {
+                    const [place] = await Location.reverseGeocodeAsync({ latitude, longitude });
+                    const locationName = place.name || place.street;
+
+                    setPickupQuery(locationName);
+                    dispatch(setPickupLocation(locationName));
+                    dispatch(setFromLocation({ lat: latitude, lng: longitude }));
+                } catch (error) {
+                    console.error("Failed to reverse geocode location", error);
+                }
+            }
+        };
+
+        fetchCurrentLocationName();
+    }, [currentLocation]);
+
     const selectLocation = (item) => {
         if (activeInput === "pickup") {
-            console.log("Selected Pickup Location:", item.geometry.location);
             dispatch(setFromLocation(item.geometry.location));
             setPickupQuery(item.name);
             dispatch(setPickupLocation(item.name));
@@ -51,7 +76,7 @@ const CustomModal = ({ visible, onClose }) => {
             setDestinationQuery(item.name);
             dispatch(setDestinationLocation(item.name));
             clearDestinationPredictions();
-            navigateToMap()
+            navigateToMap();
         }
         Keyboard.dismiss();
     };
@@ -62,10 +87,8 @@ const CustomModal = ({ visible, onClose }) => {
         Keyboard.dismiss();
     };
 
-    const fromLocation = useSelector((state) => state.location.fromLocation);
-    const toLocation = useSelector((state) => state.location.toLocation);
-
     const navigateToMap = () => {
+
         if (fromLocation?.lat && fromLocation?.lng && toLocation?.lat && toLocation?.lng) {
             router.push('/mapScreen');
         } else {
@@ -86,9 +109,13 @@ const CustomModal = ({ visible, onClose }) => {
                         <View className="p-7 rounded-3xl bg-white shadow-md">
                             {/* Pickup Input */}
                             <View className="flex-row mb-2 items-center">
-                                <View className="w-2/12">
-                                    <MaterialCommunityIcons className="self-center" name="human-female-dance" size={40}
-                                        color={(activeInput === "pickup") ? "red" : "black"} />
+                                <View className="w-2/12 h-8 overflow-hidden">
+                                    <MaterialCommunityIcons
+                                        className="self-center"
+                                        name="human-female-dance"
+                                        size={40}
+                                        color={(activeInput === "pickup") ? "red" : "black"}
+                                    />
                                 </View>
                                 <View className="flex-1 border-b border-gray-300 relative">
                                     <Text className="text-gray-500 text-xl">Pickup</Text>
@@ -124,8 +151,12 @@ const CustomModal = ({ visible, onClose }) => {
                             {/* Destination Input */}
                             <View className="flex-row items-center">
                                 <View className="w-2/12">
-                                    <Ionicons className='-scale-x-[1] self-center' name="flag-sharp" size={30}
-                                        color={(activeInput === "destination") ? "red" : "black"} />
+                                    <Ionicons
+                                        className='-scale-x-[1] self-center'
+                                        name="flag-sharp"
+                                        size={30}
+                                        color={(activeInput === "destination") ? "red" : "black"}
+                                    />
                                 </View>
                                 <View className="flex-1 relative">
                                     <Text className="text-gray-500 text-xl">Destination</Text>

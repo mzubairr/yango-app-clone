@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React from "react";
 import {
     Image,
@@ -40,21 +41,22 @@ const RequestModal = () => {
             <View className="px-4">
                 <Text className="uppercase font-extrabold text-3xl py-4">your trip</Text>
                 <View className="flex-row mb-2 items-center">
-                    <View className="h-16 w-16 overflow-hidden p-2">
-                        <Image
-                            source={require('@/assets/images/direction-man.png')}
-                            className="h-full w-full -scale-x-[1]"
-                            resizeMode="contain"
+                    <View className="w-2/12 h-10 overflow-hidden">
+                        <MaterialCommunityIcons
+                            className="self-center"
+                            name="human-female-dance"
+                            size={50}
+                            color="black"
                         />
                     </View>
-                    <Text className="text-2xl font-medium border-b border-gray-400 flex-1">{pickupLocation}</Text>
+                    <Text className="text-xl font-medium border-b border-gray-400 flex-1">{pickupLocation}</Text>
                 </View>
-                <View className="mb-2">
+                <View>
                     <View className="flex-row items-center border-b border-gray-400">
                         <View className='p-4'>
                             <Ionicons className='relative -scale-x-[1]' name="flag-sharp" size={30} color="black" />
-                        </View> 
-                        <Text className="text-2xl font-medium flex-1">{destinationLocation}</Text>
+                        </View>
+                        <Text className="text-xl font-medium flex-1">{destinationLocation}</Text>
                         <TouchableOpacity className="bg-[#EEEEEE] py-1 px-5 rounded-full">
                             <Text className="text-xl">Stops</Text>
                         </TouchableOpacity>
@@ -72,7 +74,7 @@ const RequestModal = () => {
                                 />
                             </View>
                             <View className="h-1/2 w-full">
-                                <Text className="text-center text-lg font-bold">{item.title}</Text>
+                                <Text className="text-center text-base font-bold">{item.title}</Text>
                                 <Text className="text-center text-lg font-bold">Rs.{item.price}</Text>
                             </View>
                         </TouchableOpacity>
