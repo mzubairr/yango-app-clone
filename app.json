@@ -4,7 +4,7 @@
     "slug": "yango-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/yango-icon.webp",
+    "icon": "./assets/images/yango-icon.png",
     "scheme": "yangoapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -21,7 +21,8 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
       ],
-      "package": "com.mzubair56.yangoapp"
+      "package": "com.mzubair56.yangoapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
