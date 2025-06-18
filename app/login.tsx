@@ -2,7 +2,7 @@ import { auth } from '@/lib/firebase';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Link, router } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     ActivityIndicator,
     Alert,
@@ -23,6 +23,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const emailRef = useRef<any>(null);
+    const passwordRef = useRef<any>(null);
 
     const handleLogin = () => {
         setLoading(true)
@@ -54,7 +56,15 @@ const Login = () => {
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                             <View className='p-4 justify-around'>
                                 <Text className='text-4xl capitalize font-bold mb-5'>Login</Text>
-                                <TextInput inputMode='email' value={email} placeholder="Email" className='h-16 p-4 rounded-full focus:border-black border border-gray-400 mb-3'
+                                <TextInput
+                                    inputMode='email'
+                                    value={email}
+                                    ref={emailRef}
+                                    submitBehavior='submit'
+                                    returnKeyType='next'
+                                    onSubmitEditing={() => passwordRef.current.focus()}
+                                    placeholder="Email"
+                                    className='h-16 p-4 rounded-full focus:border-black border border-gray-400 mb-3'
                                     onChangeText={setEmail}
                                 />
                                 <View className='h-16 flex-row items-center justify-between rounded-full border border-gray-400 mb-3'>
@@ -63,6 +73,7 @@ const Login = () => {
                                         placeholder="Password"
                                         secureTextEntry={!isVisible}
                                         value={password}
+                                        ref={passwordRef}
                                         onChangeText={setPassword}
                                         inputMode="text"
                                     />

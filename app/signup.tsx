@@ -2,7 +2,7 @@ import { auth } from '@/lib/firebase';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Link, router } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 const Signup = () => {
@@ -10,6 +10,9 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isVisible, setIsVisible] = useState(false);
+    const emailRef = useRef<TextInput>(null);
+    const passwordRef = useRef<TextInput>(null);
+
     const handleSignup = async () => {
         try {
             const response = await createUserWithEmailAndPassword(
@@ -39,7 +42,14 @@ const Signup = () => {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View className='p-4 justify-around'>
                         <Text className='text-4xl capitalize font-bold mb-5'>Signup</Text>
-                        <TextInput inputMode='email' value={email} placeholder="Email" className='h-16 p-4 rounded-full focus:border-black border border-gray-400 mb-3'
+                        <TextInput
+                            inputMode='email'
+                            value={email}
+                            ref={emailRef}
+                            returnKeyType='next'
+                            onSubmitEditing={() => passwordRef.current?.focus()}
+                            placeholder="Email"
+                            className='h-16 p-4 rounded-full focus:border-black border border-gray-400 mb-3'
                             onChangeText={setEmail}
                         />
                         <View className='h-16 flex-row items-center justify-between rounded-full border border-gray-400 mb-3'>
@@ -48,6 +58,7 @@ const Signup = () => {
                                 placeholder="Password"
                                 secureTextEntry={!isVisible}
                                 value={password}
+                                ref={passwordRef}
                                 onChangeText={setPassword}
                                 inputMode="text"
                             />
