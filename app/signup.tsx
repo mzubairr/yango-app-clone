@@ -25,7 +25,7 @@ const Signup = () => {
             setEmail("");
             setPassword("");
         } catch (error) {
-            Alert.alert("Failed to signup", String(error));
+            Alert.alert("Signup Failed. Please check your email and password.");
         }
     }
     return (

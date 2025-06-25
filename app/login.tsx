@@ -34,7 +34,7 @@ const Login = () => {
 
             })
             .catch(() => {
-                Alert.alert("Login Failed");
+                Alert.alert("Login Failed. Please check your email and password.");
                 setLoading(false)
             })
     };
